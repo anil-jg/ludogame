@@ -1,6 +1,7 @@
-var WIDTH = 640;
-var HEIGHT = 1136;
-var LUDO_HEIGHT = 640;
+const WIDTH = 640;
+const HEIGHT = 1136;
+const LUDO_HEIGHT = 640;
+const UNIT_LENGTH = LUDO_HEIGHT / 15;
 class Dot extends PIXI.Container{
 	constructor(renderer,color) {
 		super();
@@ -28,15 +29,15 @@ class Dot extends PIXI.Container{
     activate(){
         this.animating = true;
         this.interactive = true;
-        // this.anchor.set(0.5);
-        this.scale.x *=1.2;
-        this.scale.y *=1.2;
-        // this.scale(1.2,1.2)
     }
     deActivate(){
         this.interactive = false;
         this.animating = false;
         this.scale(1.0,1.0)
+    }
+    move(x,y){
+        this.x = UNIT_LENGTH*x + 20;
+        this.y = 246 + UNIT_LENGTH*y + 20;
     }
 }
 class Dice extends PIXI.Container{
@@ -61,7 +62,7 @@ class Dice extends PIXI.Container{
 class Game extends PIXI.Application{
 	constructor() {
         super(WIDTH, HEIGHT, {backgroundColor: 0x000000, legacy: true});
-        document.body.appendChild(this.view);
+        document.getElementById("app").appendChild(this.view);
         this.stage = this.stage;
         this.preload();
     }
@@ -71,7 +72,7 @@ class Game extends PIXI.Application{
     }
     setup(){
         
-        const unitLength = LUDO_HEIGHT / 15;
+        const UNIT_LENGTH = LUDO_HEIGHT / 15;
         const padding = 2;
         
         const ludoArea = PIXI.Sprite.fromImage("assets/images/tiledbackground.png");
@@ -152,11 +153,15 @@ class Game extends PIXI.Application{
             this.dots[color] = {};
             for(var i=1;i<=4;i++){
                 var newDot = new Dot(this.renderer,color);
-                newDot.x = positionMatrix[color][i].x*unitLength ;
-                newDot.y = 246 + positionMatrix[color][i].y*unitLength + padding;
+                newDot.x = positionMatrix[color][i].x*UNIT_LENGTH ;
+                newDot.y = 246 + positionMatrix[color][i].y*UNIT_LENGTH + padding;
                 newDot.interactive = true;
                 newDot.on("pointerdown",()=>{
-                    console.log("down");
+                    var position = prompt("Enter new position e.g 6,13");
+                    var arr = position.split(",")
+                    var x = parseInt(arr[0]);
+                    var y = parseInt(arr[1]);
+                    newDot.move(x,y);
                 })
                 this.dots[color][i] = newDot;
                 this.stage.addChild(newDot);        
@@ -164,8 +169,13 @@ class Game extends PIXI.Application{
         })
 
         this.dice.on("rollend",(result)=>{
-            console.log(this.dots);
-            this.dots['red'][1].activate();
+            var input = prompt(`Result is ${result}, Enter new position of dot e.g. red,1,6,13`)
+            var arr = input.split(",");
+            var color = arr[0];
+            var dot = parseInt(arr[1])
+            var x = parseInt(arr[2]);
+            var y = parseInt(arr[3]);
+            this.dots[color][dot].move(x,y)
         })
 
 

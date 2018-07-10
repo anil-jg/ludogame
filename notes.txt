@@ -1,0 +1,33 @@
+I am using the game pad as 15x15 matrix.
+
+* * * * * * 1 1 1 * * * * * * 
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+1 1 1 1 1 1 * * * 1 1 1 1 1 1
+1 1 1 1 1 1 * * * 1 1 1 1 1 1
+1 1 1 1 1 1 * * * 1 1 1 1 1 1
+* * * * * * 1 1 1 * * * * * * 
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+* * * * * * 1 1 1 * * * * * *
+
+this thing can be extended for the * marks , entry points etc game specifics.
+
+so to put a dot on the first line(from top) , (x,y) = (6,0)
+
+you can click on a dot , it will ask for the coordinates to move , 
+
+or else you click on the dice(the play button for now) . to specify which color, number , x, y;
+
+e.g start position for red will be (6,13);
+e.g home position for red will be (7,8);
+
+Also i have assumes the initial dot position as 
+
+	3rddot  4thdot
+	1stdot  2nddot
