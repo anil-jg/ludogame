@@ -260,13 +260,13 @@ class Game extends PIXI.Application{
         })
 
         this.dice.on("rollend",(result)=>{
-            var input = prompt(`Result is ${result}, Enter new position of dot e.g. red,1,6,13`)
+            var input = prompt(`Result is ${result}, Enter new position of dot e.g. red,1,45`)
             var arr = input.split(",");
             var color = arr[0];
             var dot = parseInt(arr[1])
-            var x = parseInt(arr[2]);
-            var y = parseInt(arr[3]);
-            this.dots[color][dot].move(x,y)
+            var position = parseInt(arr[2]);
+            // var y = parseInt(arr[3]);
+            this.dots[color][dot].move(position)
         })
 
 
