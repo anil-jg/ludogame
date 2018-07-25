@@ -2,6 +2,91 @@ const WIDTH = 640;
 const HEIGHT = 1136;
 const LUDO_HEIGHT = 640;
 const UNIT_LENGTH = LUDO_HEIGHT / 15;
+
+const positionConfig = {
+    1:[6,14],
+    2:[6,13],
+    3:[6,12],
+    4:[6,11],
+    5:[6,10],
+    7:[6,9],
+    7:[5,8],
+    8:[4,8],
+    9:[3,8],
+    10:[2,8],
+    11:[1,8],
+    12:[0,8],
+    13:[0,7],
+    14:[0,6],
+    15:[1,6],
+    16:[2,6],
+    17:[3,6],
+    18:[4,6],
+    19:[5,6],
+    20:[6,5],
+    21:[6,4],
+    22:[6,3],
+    23:[6,2],
+    24:[6,1],
+    25:[6,0],
+    26:[7,0],
+    27:[8,0],
+    28:[8,1],
+    29:[8,2],
+    30:[8,3],
+    31:[8,4],
+    32:[8,5],
+    33:[9,6],
+    34:[10,6],
+    35:[11,6],
+    36:[12,6],
+    37:[13,6],
+    38:[14,6],
+    39:[14,7],
+    40:[14,8],
+    41:[13,8],
+    42:[12,8],
+    43:[11,8],
+    44:[10,8],
+    45:[9,8],
+    46:[8,9],
+    47:[8,10],
+    48:[8,11],
+    49:[8,12],
+    50:[8,13],
+    51:[8,14],
+    52:[7,14],
+    53:[7,13],
+    54:[7,12],
+    55:[7,11],
+    56:[7,10],
+    57:[7,9],
+    58:[7,9],
+    59:[7,9],
+    60:[7,9],
+    61:[1,7],
+    62:[2,7],
+    63:[3,7],
+    64:[4,7],
+    65:[5,7],
+    69:[7,1],
+    70:[7,2],
+    71:[7,3],
+    72:[7,4],
+    73:[7,5],
+    77:[13,7],
+    78:[12,7],
+    79:[11,7],
+    80:[10,7],
+    81:[9,7],
+    "home1":[7,8],
+    "home2":[6,7],
+    "home3":[7,6],
+    "home4":[8,7]
+}
+function getCoordinate(position){
+    return positionConfig[position];
+}
 class Dot extends PIXI.Container{
 	constructor(renderer,color) {
 		super();
@@ -35,9 +120,12 @@ class Dot extends PIXI.Container{
         this.animating = false;
         this.scale(1.0,1.0)
     }
-    move(x,y){
-        this.x = UNIT_LENGTH*x + 20;
-        this.y = 246 + UNIT_LENGTH*y + 20;
+    move(position){
+        var coordinates = getCoordinate(position);
+        var pos_x = coordinates[0];
+        var pos_y = coordinates[1];
+        this.x = UNIT_LENGTH*pos_x + 20;
+        this.y = 246 + UNIT_LENGTH*pos_y + 20;
     }
 }
 class Dice extends PIXI.Container{
@@ -157,11 +245,14 @@ class Game extends PIXI.Application{
                 newDot.y = 246 + positionMatrix[color][i].y*UNIT_LENGTH + padding;
                 newDot.interactive = true;
                 newDot.on("pointerdown",()=>{
-                    var position = prompt("Enter new position e.g 6,13");
-                    var arr = position.split(",")
-                    var x = parseInt(arr[0]);
-                    var y = parseInt(arr[1]);
-                    newDot.move(x,y);
+                    var position = prompt("Enter new position e.g 45");
+                    if(position){
+                        // var arr = position.split(",")
+                        // var x = parseInt(arr[0]);
+                        // var y = parseInt(arr[1]);
+                        newDot.move(position);    
+                    }
+                    
                 })
                 this.dots[color][i] = newDot;
                 this.stage.addChild(newDot);        
